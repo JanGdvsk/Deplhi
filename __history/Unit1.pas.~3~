@@ -1,0 +1,115 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    MakeParse: TButton;
+    InputStr: TEdit;
+    ResultStr: TEdit;
+    InputAllString: TListBox;
+    procedure FormCreate(Sender: TObject);
+    procedure GetName(Sender: TObject);
+    procedure MakeParseClick(Sender: TObject);
+    procedure InputAllStringClick(Sender: TObject);
+  private
+    { Private declarations }
+    Dictionary: TStringList;
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+
+const
+// Исходный перечень сообщений
+C_MESSAGE_STRINGS: array [0..11] of string = (
+                  'Carter',
+                  'My name is rod Stewart',
+                  'Nice to meet you, im dixon...',
+                  'I am smith walker it nice to meet you',
+                  'im Carter Stewart Smith, how are you doing',
+                  'There no name here',
+                  'Hi I late for an interview',
+                  'I am a retail manager&',
+                  ' Dixon marshall and I have a question',
+                  'Where is Rod Stewart and his dog?',
+                  'Hi my name is Dixon Walker, where can I buy these shoes',
+                  'I am hungry but I want to see Marshall first.'
+);
+
+C_DISTIONARY: array [0..7] of string = (
+                  'Carter',
+                  'rod Stewart',
+                  'dixon...',
+                  'smith walker',
+                  'Carter Stewart Smith',
+                  'Dixon marshall',
+                  'Rod Stewart',
+                  'Dixon Walker'
+);
+
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  messageStr: string;
+  i : integer;
+begin
+// Выводим все сроки в перечень
+  for i := 0 to 11 do
+  begin
+    InputAllString.items[i] := C_MESSAGE_STRINGS[i];
+  end;
+    InputAllString.ItemIndex := 0;
+
+end;
+
+
+procedure TForm1.MakeParseClick(Sender: TObject);
+var
+  i : integer;
+  StartStr : Integer;
+  EndStr : Integer;
+begin
+  StartStr := -1;
+  for I := 0 to 7 do
+  begin
+    StartStr := Pos(InputStr.Text ,  C_DISTIONARY[i]);
+    EndStr := C_DISTIONARY[i].Length;
+    if StartStr <> -1  then
+      break;
+  end;
+   if StartStr <> -1  then
+     ResultStr.Text := copy(InputStr.Text, StartStr, EndStr);
+
+end;
+
+
+
+
+procedure TForm1.GetName(Sender: TObject);
+begin
+//
+end;
+
+procedure TForm1.InputAllStringClick(Sender: TObject);
+var
+ FindLine : integer;
+ i        : integer;
+begin
+
+  For i:= 0 to InputAllString.Items.Count-1  do
+    If (InputAllString.Selected[i]) then
+      InputStr.Text := InputAllString.Items.Strings[i];
+end;
+
+end.
